@@ -6,7 +6,7 @@ step(
     """
     CREATE TABLE eod (
         date DATE NOT NULL,
-        symbol INTEGER REFERENCES security(id) ON DELETE CASCADE,
+        security INTEGER REFERENCES security(id) ON DELETE CASCADE,
         open DECIMAL(12, 4) NOT NULL,
         close DECIMAL(12, 4) NOT NULL,
         adj_close DECIMAL(12, 4) NOT NULL,
