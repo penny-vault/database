@@ -1,6 +1,6 @@
 from yoyo import step
 
-__depends__ = ['0001.security',]
+__depends__ = ['0001.security', '0001.source']
 
 step(
     """
