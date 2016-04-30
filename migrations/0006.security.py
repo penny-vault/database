@@ -1,6 +1,6 @@
 from yoyo import step
 
-__depends__ = ['0005.security.py']
+__depends__ = ['0005.security']
 
 step(
     """
