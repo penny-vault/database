@@ -6,7 +6,7 @@ step(
     """
     CREATE TABLE naics (
         naics integer PRIMARY KEY,
-        name VARCHAR(200) NOT NULL,
+        name VARCHAR(200) NOT NULL
     )
     """,
     "DROP TABLE naics"
