@@ -5,7 +5,7 @@ __depends__ = []
 step(
     """
     CREATE TABLE naics (
-        naics integer PRIMARY KEY,
+        naics integer NOT NULL,
         name VARCHAR(200) NOT NULL
     )
     """,
