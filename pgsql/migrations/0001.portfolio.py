@@ -200,7 +200,7 @@ steps = [
             date DATE NOT NULL,
             metric_name VARCHAR(24) NOT NULL,
             value NUMERIC(16, 4),
-            PRIMARY KEY (portfolio_id, date)
+            PRIMARY KEY (portfolio_id, date, metric_name)
         );
         """,
         """
