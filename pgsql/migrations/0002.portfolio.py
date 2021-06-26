@@ -62,4 +62,24 @@ steps = [
         DROP POLICY portfolio_metric_policy
         """
     ),
+
+    # holdings access policy
+    step(
+        """
+        ALTER TABLE holdings ENABLE ROW LEVEL SECURITY;
+        """,
+        """
+        ALTER TABLE holdings DISABLE ROW LEVEL SECURITY;
+        """
+    ),
+    step(
+        """
+        CREATE POLICY holdings_policy ON holdings
+            USING (owner = current_user)
+            WITH CHECK (owner = current_user)
+        """,
+        """
+        DROP POLICY holdings_policy
+        """
+    ),
 ]

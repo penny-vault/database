@@ -33,7 +33,7 @@ steps = [
     # Transaction types
     step(
         """
-        CREATE TYPE tx_type AS ENUM ('buy', 'sell', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'dividend', 'ltc', 'stc', 'deposit', 'withdraw');
+        CREATE TYPE tx_type AS ENUM ('buy', 'sell', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'dividend', 'ltc', 'stc', 'deposit', 'withdraw', 'income');
         """,
         """
         DROP TYPE tx_type
@@ -50,63 +50,6 @@ steps = [
         """
     ),
 
-    # Transaction trigger
-    # We keep this here for reference
-    #step(
-    #    """
-    #    CREATE OR REPLACE FUNCTION update_transaction_shares_held() RETURNS trigger AS $$
-    #        DECLARE
-    #            my_shares_held int := 0;
-    #            my_security_id int;
-    #            my_portfolio_id uuid;
-    #            my_date timestamp;
-    #            r transaction%rowtype;
-    #        BEGIN
-    #            IF (TG_OP = 'INSERT') THEN
-    #                my_portfolio_id := NEW.portfolio_id;
-    #                my_security_id := NEW.security_id;
-    #                my_date := NEW.date;
-    #            ELSIF (TG_OP = 'DELETE') THEN
-    #                my_portfolio_id := OLD.portfolio_id;
-    #                my_security_id := OLD.security_id;
-    #                my_date := OLD.date;
-    #            END IF;
-    #
-    #            -- Determine the number of shares held up to this point
-    #            FOR r IN
-    #                SELECT * FROM transaction
-    #                WHERE portfolio_id = my_portfolio_id AND security_id = my_security_id AND date < my_date
-    #                ORDER BY date DESC, sequence_num DESC
-    #                LIMIT 1
-    #            LOOP
-    #                IF (r.shares_held is NULL) THEN
-    #                    my_shares_held := 0;
-    #                ELSE
-    #                    my_shares_held := r.shares_held;
-    #                END IF;
-    #            END LOOP;
-    #
-    #            -- Update shares_held for this transaction and everything above it
-    #            FOR r IN
-    #                SELECT * FROM transaction
-    #                WHERE portfolio_id = my_portfolio_id AND security_id = my_security_id AND date >= my_date
-    #                ORDER BY date ASC, sequence_num ASC
-    #            LOOP
-    #                IF (r.num_shares is not NULL) THEN
-    #                    my_shares_held := r.num_shares + my_shares_held;
-    #                END IF;
-    #                UPDATE transaction SET shares_held = my_shares_held WHERE id = r.id;
-    #            END LOOP;
-    #
-    #            RETURN NULL;
-    #        END;
-    #    $$ LANGUAGE plpgsql;
-    #    """,
-    #    """
-    #    DROP FUNCTION update_transaction_shares_held;
-    #    """
-    #),
-    
     # Transaction
     step(
         """
@@ -124,6 +67,7 @@ steps = [
             security_id INT,
             total_cost NUMERIC(14, 4) NOT NULL,
             num_shares NUMERIC(14, 4),
+            price_per_share NUMERIC(14, 4),
             commission NUMERIC(14, 4),
             memo TEXT,
             tags varchar[],
@@ -148,8 +92,9 @@ steps = [
         CREATE TABLE holdings (
             date TIMESTAMP NOT NULL,
             portfolio_id UUID NOT NULL,
+            owner VARCHAR(63) NOT NULL DEFAULT current_user,
             holdings JSON,
-            PRIMARY KEY(date, portfolio_id) 
+            PRIMARY KEY(date, portfolio_id)
         );
         """,
         """
@@ -175,6 +120,8 @@ steps = [
                END IF;
 
                DELETE FROM holdings WHERE portfolio_id = my_portfolio_id AND date >= my_date;
+               DELETE FROM portfolio_metric WHERE portfolio_id = my_portfolio_id AND date >= my_date;
+               RETURN NEW;
            END;
         $$ LANGUAGE plpgsql;
         """,
@@ -191,11 +138,77 @@ steps = [
         DROP TRIGGER transaction_invalidate_holdings ON transaction;
         """
     ),
+    step(
+        """
+        CREATE OR REPLACE FUNCTION update_open_date() RETURNS TRIGGER AS $$
+           DECLARE
+               my_portfolio_id uuid;
+           BEGIN
+               IF (TG_OP = 'DELETE') THEN
+                   my_portfolio_id := OLD.portfolio_id;
+               ELSIF (TG_OP = 'UPDATE') THEN
+                   my_portfolio_id := NEW.portfolio_id;
+               ELSIF (TG_OP = 'INSERT') THEN
+                   my_portfolio_id := NEW.portfolio_id;
+               END IF;
+
+               UPDATE portfolio SET open_date=coalesce((SELECT MIN(date) FROM transaction WHERE portfolio_id=my_portfolio_id),now()) where id=my_portfolio_id;
+               RETURN NEW;
+           END;
+        $$ LANGUAGE plpgsql;
+        """,
+        """
+        DROP FUNCTION update_open_date();
+        """
+    ),
+    step(
+        """
+        CREATE TRIGGER transaction_update_open_date AFTER INSERT OR DELETE OR UPDATE ON transaction
+            FOR EACH ROW EXECUTE PROCEDURE update_open_date();
+        """,
+        """
+        DROP TRIGGER transaction_update_open_date;
+        """
+    ),
+    # Ensure that 'buy' transactions have positive shares and 'sell'
+    # transactions have negative
+    step(
+        """
+        CREATE OR REPLACE FUNCTION check_share_sign() RETURNS TRIGGER AS $$
+            BEGIN
+                IF ((NEW.transaction_type = 'reinvest-dividend' OR
+                     NEW.transaction_type = 'reinvest-ltc' OR
+                     NEW.transaction_type = 'reinvest-stc') AND
+                    NEW.num_shares <= 0) THEN
+                    RAISE EXCEPTION 'BUY and REINVEST transactions must have a positive number of shares';
+                END IF;
+
+                IF (NEW.transaction_type = 'sell' AND NEW.num_shares > 0) THEN
+                    RAISE EXCEPTION 'SELL transactions must have a negative number of shares';
+                END IF;
+
+                RETURN NEW;
+           END;
+        $$ LANGUAGE plpgsql;
+        """,
+        """
+        DROP FUNCTION check_share_sign();
+        """
+    ),
+    step(
+        """
+        CREATE TRIGGER transaction_check_share_sign BEFORE INSERT OR UPDATE ON transaction
+            FOR EACH ROW EXECUTE PROCEDURE check_share_sign();
+        """,
+        """
+        DROP TRIGGER transaction_check_share_sign ON transaction;
+        """
+    ),
     # Portfolio metric
     step(
         """
         CREATE TABLE portfolio_metric (
-            portfolio_id UUID NOT NULL REFERENCES portfolio(id),
+            portfolio_id UUID NOT NULL REFERENCES portfolio(id) ON DELETE CASCADE,
             owner VARCHAR(63) NOT NULL DEFAULT current_user,
             date DATE NOT NULL,
             metric_name VARCHAR(24) NOT NULL,

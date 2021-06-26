@@ -2,7 +2,8 @@ from yoyo import step
 
 __depends__ = ['0001.security', '0001.source']
 
-step(
+steps = [
+    step(
     """
     CREATE TABLE eod (
         date DATE NOT NULL,
@@ -17,4 +18,12 @@ step(
     )
     """,
     "DROP TABLE eod"
-)
+    ),
+    step(
+        """
+        CREATE INDEX eod_security_idx ON eod(security);
+        """,
+        """
+        DROP INDEX eod_security_idx;
+        """
+    )
