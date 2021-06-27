@@ -1,0 +1,2 @@
+DROP TABLE tickers_v1 CASCADE;
+DROP TABLE tickers_v1_tmp CASCADE;

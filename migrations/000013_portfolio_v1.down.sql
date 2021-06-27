@@ -1,0 +1,2 @@
+DROP POLICY portfolio_v1_policy;
+ALTER TABLE portfolio_v1 DISABLE ROW LEVEL SECURITY;
