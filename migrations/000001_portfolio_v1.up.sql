@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS portfolio_v1 (
     created TIMESTAMP NOT NULL DEFAULT now(),
     lastchanged TIMESTAMP NOT NULL DEFAULT now()
 );
-CREATE INDEX portfolio_userid_idx ON portfolio(userid);
+CREATE INDEX portfolio_userid_idx ON portfolio_v1(userid);
 
 CREATE TRIGGER set_timestamp
-BEFORE UPDATE ON portfolio
+BEFORE UPDATE ON portfolio_v1
 FOR EACH ROW
 EXECUTE FUNCTION trigger_set_timestamp();
 
