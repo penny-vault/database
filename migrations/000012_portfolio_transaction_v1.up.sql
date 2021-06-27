@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
 );
 
 ALTER TABLE portfolio_transaction_v1 ENABLE ROW LEVEL SECURITY;
-CREATE POLICY portfolio_transaction_v1_policy ON transaction
+CREATE POLICY portfolio_transaction_v1_policy ON portfolio_transaction_v1
     USING (userid = current_user)
     WITH CHECK (userid = current_user);
