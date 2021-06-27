@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TYPE tax_disposition AS ENUM ('ltc', 'stc', 'deferred', 'roth');
 CREATE TYPE tx_type AS ENUM ('deposit', 'sell', 'dividend', 'income', 'ltc', 'stc', 'buy', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'withdraw');
 CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
@@ -25,3 +26,4 @@ ALTER TABLE portfolio_transaction_v1 ENABLE ROW LEVEL SECURITY;
 CREATE POLICY portfolio_transaction_v1_policy ON portfolio_transaction_v1
     USING (userid = current_user)
     WITH CHECK (userid = current_user);
+COMMIT;
