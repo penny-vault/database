@@ -1,5 +1,5 @@
-CREATE TYPE IF NOT EXISTS tax_disposition AS ENUM ('ltc', 'stc', 'deferred', 'roth')
-CREATE TYPE IF NOT EXISTS tx_type AS ENUM ('deposit', 'sell', 'dividend', 'income', 'ltc', 'stc', 'buy', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'withdraw');
+CREATE TYPE tax_disposition AS ENUM ('ltc', 'stc', 'deferred', 'roth')
+CREATE TYPE tx_type AS ENUM ('deposit', 'sell', 'dividend', 'income', 'ltc', 'stc', 'buy', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'withdraw');
 CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     cleared BOOL NOT NULL DEFAULT false,
