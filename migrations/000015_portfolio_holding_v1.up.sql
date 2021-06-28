@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS portfolio_holding_v1 (
     value NUMERIC(14, 4) NOT NULL CHECK (value >= 0.0)
 );
 
-ALTER TABLE portfolio_holdings_v1 ENABLE ROW LEVEL SECURITY;
-CREATE POLICY user_id_policy ON portfolio_holdings_v1
+ALTER TABLE portfolio_holding_v1 ENABLE ROW LEVEL SECURITY;
+CREATE POLICY user_id_policy ON portfolio_holding_v1
     USING (user_id = current_user)
     WITH CHECK (user_id = current_user);
 COMMIT;
