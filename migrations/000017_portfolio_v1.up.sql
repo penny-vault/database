@@ -1,0 +1,1 @@
+ALTER TABLE portfolio_v1 ALTER COLUMN user_id SET DEFAULT current_user;
