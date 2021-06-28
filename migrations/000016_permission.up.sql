@@ -28,7 +28,7 @@ GRANT select, insert, update, delete ON portfolio_holding_v1 TO pvuser;
 -- authenticator role
 -- make sure you set the password
 CREATE ROLE pvapi WITH NOINHERIT LOGIN CREATEROLE;
-GRANT pvuser TO pvauth;
-GRANT pvanon TO pvauth;
+GRANT pvuser TO pvapi;
+GRANT pvanon TO pvapi;
 
 COMMIT;
