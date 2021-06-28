@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS stock_splits_v1;
+DROP TABLE IF EXISTS stock_splits_v1 CASCADE;

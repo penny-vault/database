@@ -12,7 +12,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE TABLE IF NOT EXISTS portfolio_v1 (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    userid VARCHAR(32) NOT NULL,
+    user_id VARCHAR(63) NOT NULL,
     name VARCHAR(32) NOT NULL,
     strategy_shortcode VARCHAR(8) NOT NULL,
     arguments JSONB NOT NULL,

@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS risk_indicators_v1;
+DROP TABLE IF EXISTS risk_indicators_v1 CASCADE;

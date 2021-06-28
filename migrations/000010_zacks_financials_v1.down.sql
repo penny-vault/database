@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS zacks_financials_v1;
+DROP TABLE IF EXISTS zacks_financials_v1 CASCADE;

@@ -1,16 +1,16 @@
 BEGIN;
-CREATE TYPE tax_disposition AS ENUM ('ltc', 'stc', 'deferred', 'roth');
-CREATE TYPE tx_type AS ENUM ('deposit', 'sell', 'dividend', 'income', 'ltc', 'stc', 'buy', 'short', 'reinvest-dividend', 'reinvest-ltc', 'reinvest-stc', 'withdraw');
+CREATE TYPE tax_disposition AS ENUM ('LTC', 'STC', 'DEFERRED', 'ROTH');
+CREATE TYPE tx_type AS ENUM ('DEPOSIT', 'SELL', 'DIVIDEND', 'LTC', 'STC', 'BUY', 'WITHDRAW', 'MARKER');
 CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     cleared BOOL NOT NULL DEFAULT false,
     commission NUMERIC(14, 4),
-    composite_figi text,
+    composite_figi TEXT,
     event_date DATE NOT NULL,
     memo TEXT,
     num_shares NUMERIC(14, 4),
     portfolio_id UUID NOT NULL REFERENCES portfolio_v1(id) ON DELETE CASCADE,
-    price_per_share NUMERIC(14, 4),
+    price_per_share NUMERIC(14, 4) CHECK (price_per_share >= 0.0),
     source VARCHAR(128),
     source_id VARCHAR(128) NOT NULL DEFAULT uuid_generate_v4(),
     tags varchar[],
@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
     ticker text,
     total_cost NUMERIC(14, 4) NOT NULL,
     transaction_type tx_type NOT NULL,
-    userid VARCHAR(63) NOT NULL DEFAULT current_user,
+    user_id VARCHAR(63) NOT NULL DEFAULT current_user,
     UNIQUE (portfolio_id, source_id)
 );
 
 ALTER TABLE portfolio_transaction_v1 ENABLE ROW LEVEL SECURITY;
-CREATE POLICY portfolio_transaction_v1_policy ON portfolio_transaction_v1
-    USING (userid = current_user)
-    WITH CHECK (userid = current_user);
+CREATE POLICY user_id_policy ON portfolio_transaction_v1
+    USING (user_id = current_user)
+    WITH CHECK (user_id = current_user);
 COMMIT;

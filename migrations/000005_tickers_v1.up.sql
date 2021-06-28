@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS tickers_v1 (
    ticker text,
    cik text,
@@ -76,3 +78,5 @@ CREATE TABLE IF NOT EXISTS tickers_v1_tmp (
    last_updated_utc timestamp,
    source datasource
 );
+
+COMMIT;

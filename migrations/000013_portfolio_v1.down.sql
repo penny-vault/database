@@ -1,2 +1,6 @@
-DROP POLICY portfolio_v1_policy;
+BEGIN;
+
+DROP POLICY IF EXISTS user_id_policy ON portfolio_v1;
 ALTER TABLE portfolio_v1 DISABLE ROW LEVEL SECURITY;
+
+COMMIT;

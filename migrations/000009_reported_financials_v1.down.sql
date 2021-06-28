@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS reported_financials_v1;
+DROP TABLE IF EXISTS reported_financials_v1 CASCADE;
