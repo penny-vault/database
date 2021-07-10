@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS eod_v1 (
    close numeric(12, 4),
    volume bigint,
    source datasource,
-   PRIMARY KEY (composite_figi, ticker, event_time)
+   PRIMARY KEY (composite_figi, ticker, event_date)
 );

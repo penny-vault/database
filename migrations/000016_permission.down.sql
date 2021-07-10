@@ -5,14 +5,14 @@ BEGIN;
 DROP ROLE pvanon;
 
 -- execute on allowed functions
-REVOKE execute ON function generate_uuid_v4 FROM pvuser;
+REVOKE execute ON function uuid_generate_v4 FROM pvuser;
 
 -- tables with read only access
 REVOKE select ON dividend_v1 FROM pvuser;
 REVOKE select ON eod_v1 FROM pvuser;
 REVOKE select ON reported_financials_v1 FROM pvuser;
-REVOKE select ON risk_indicaFROMrs_v1 FROM pvuser;
-REVOKE select ON sFROMck_splits_v1 FROM pvuser;
+REVOKE select ON risk_indicators_v1 FROM pvuser;
+REVOKE select ON stock_splits_v1 FROM pvuser;
 REVOKE select ON tickers_v1 FROM pvuser;
 REVOKE select ON zacks_financials_v1 FROM pvuser;
 

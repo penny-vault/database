@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS tickers_v1 (
    source datasource,
    PRIMARY KEY (ticker, composite_figi)
 );
-CREATE INDEX IF NOT EXISTS ON tickers_v1(active);
+CREATE INDEX IF NOT EXISTS tickers_v1_active ON tickers_v1(active);
 
 CREATE TABLE IF NOT EXISTS tickers_v1_tmp (
    id serial primary key,
