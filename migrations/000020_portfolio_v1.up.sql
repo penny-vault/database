@@ -2,6 +2,5 @@ BEGIN;
 
 ALTER TABLE portfolio_v1 ADD COLUMN end_date TIMESTAMP;
 ALTER TABLE portfolio_v1 ADD COLUMN holdings JSONB;
-ALTER TABLE portfolio_v1 ADD COLUMN securities JSONB;
 
 COMMIT;

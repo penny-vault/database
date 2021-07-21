@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE eod_v1 DROP COLUMN dividend;
+ALTER TABLE eod_v1 DROP COLUMN split_factor;
+
+COMMIT;
