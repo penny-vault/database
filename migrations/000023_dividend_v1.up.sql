@@ -1,6 +1,0 @@
-BEGIN;
-
-ALTER TABLE eod_v1 ADD COLUMN dividend NUMERIC(12, 4);
-ALTER TABLE eod_v1 ADD COLUMN split_factor NUMERIC(9, 6);
-
-COMMIT;

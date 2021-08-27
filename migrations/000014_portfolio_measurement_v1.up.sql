@@ -1,7 +1,6 @@
 BEGIN;
 CREATE TABLE IF NOT EXISTS portfolio_measurement_v1 (
     event_date DATE NOT NULL,
-    justification JSONB NOT NULL,
     percent_return NUMERIC(12, 11) NOT NULL CHECK (percent_return <= 1.0 AND percent_return >= -1.0),
     portfolio_id UUID NOT NULL REFERENCES portfolio_v1(id) ON DELETE CASCADE,
     risk_free_value NUMERIC(14, 4) NOT NULL CHECK (risk_free_value >= 0.0),

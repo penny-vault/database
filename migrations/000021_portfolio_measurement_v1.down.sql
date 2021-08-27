@@ -1,8 +1,5 @@
 BEGIN;
 
--- Values stored ass with 2 decimal digits (i.e. they must be
--- divided by 100)
-
 -- Adds 60-bytes of storage, calculated daily for a 30-yr portfolio this equals
 -- 60 * 252 * 30 / 1024 = 443 KB of disk space required
 
@@ -54,5 +51,38 @@ ALTER TABLE portfolio_measurement_v1 DROP COLUMN sortino_ratio;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN std_dev;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN treynor_ratio;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN ulcer_index;
+
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN benchmark_value;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN strategy_growth_of_10k;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN benchmark_growth_of_10k;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN risk_free_growth_of_10k;
+
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN value NUMERIC(14,4);
+UPDATE portfolio_measurement_v1 SET value = strategy_value;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN strategy_value;
+
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN risk_free_value_tmp NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET risk_free_value_tmp = risk_free_value WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN risk_free_value;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN risk_free_value NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET risk_free_value = risk_free_value_tmp WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN risk_free_value_tmp;
+
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN total_deposited_to_date_tmp NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET total_deposited_to_date_tmp = total_deposited_to_date WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN total_deposited_to_date;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN total_deposited_to_date NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET total_deposited_to_date = total_deposited_to_date_tmp WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN total_deposited_to_date_tmp;
+
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN total_withdrawn_to_date_tmp NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET total_withdrawn_to_date_tmp = total_withdrawn_to_date WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN total_withdrawn_to_date;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN total_withdrawn_to_date NUMERIC(14, 4);
+UPDATE portfolio_measurement_v1 SET total_withdrawn_to_date = total_withdrawn_to_date_tmp WHERE portfolio_id IS NOT NULL;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN total_withdrawn_to_date_tmp;
+
+ALTER TABLE portfolio_v1 ADD COLUMN performance_json JSONB;
+ALTER TABLE portfolio_v1 DROP COLUMN performance_bytes;
 
 COMMIT;
