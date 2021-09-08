@@ -1,6 +1,6 @@
 BEGIN;
 CREATE TYPE tax_disposition AS ENUM ('LTC', 'STC', 'DEFERRED', 'ROTH');
-CREATE TYPE tx_type AS ENUM ('DEPOSIT', 'SELL', 'DIVIDEND', 'LTC', 'STC', 'BUY', 'WITHDRAW', 'MARKER');
+CREATE TYPE tx_type AS ENUM ('DEPOSIT', 'SELL', 'DIVIDEND', 'LTC', 'STC', 'BUY', 'WITHDRAW', 'MARKER', 'SPLIT');
 CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     cleared BOOL NOT NULL DEFAULT false,
