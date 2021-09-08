@@ -14,9 +14,12 @@ ALTER TABLE portfolio_measurement_v1 ADD COLUMN beta_10yr REAL;
 
 -- Time-Weighted Rate of Return (Periods > 1yr are annualized)
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_1d REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_wtd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_1wk REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_mtd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_1mo REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_3mo REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_ytd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_1yr REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_3yr REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_5yr REAL;
@@ -24,9 +27,12 @@ ALTER TABLE portfolio_measurement_v1 ADD COLUMN twrr_10yr REAL;
 
 -- Money-Weighted Rate of Return (Periods > 1yr are annualized)
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_1d REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_wtd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_1wk REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_mtd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_1mo REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_3mo REAL;
+ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_ytd REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_1yr REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_3yr REAL;
 ALTER TABLE portfolio_measurement_v1 ADD COLUMN mwrr_5yr REAL;

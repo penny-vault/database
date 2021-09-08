@@ -17,9 +17,12 @@ ALTER TABLE portfolio_measurement_v1 DROP COLUMN beta_10yr;
 
 -- Time-Weighted Rate of Return (Periods > 1yr are annualized)
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_1d;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_wtd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_1wk;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_mtd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_1mo;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_3mo;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_ytd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_1yr;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_3yr;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_5yr;
@@ -27,9 +30,12 @@ ALTER TABLE portfolio_measurement_v1 DROP COLUMN twrr_10yr;
 
 -- Money-Weighted Rate of Return (Periods > 1yr are annualized)
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_1d;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_wtd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_1wk;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_mtd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_1mo;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_3mo;
+ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_ytd;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_1yr;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_3yr;
 ALTER TABLE portfolio_measurement_v1 DROP COLUMN mwrr_5yr;
