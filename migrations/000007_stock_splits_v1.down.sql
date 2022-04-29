@@ -1,1 +1,3 @@
+BEGIN;
 DROP TABLE IF EXISTS stock_splits_v1 CASCADE;
+COMMIT;

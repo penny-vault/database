@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS reported_financials_v1 (
     ticker text,
     composite_figi text,
@@ -113,3 +114,4 @@ CREATE TABLE IF NOT EXISTS reported_financials_v1 (
     source datasource,
     PRIMARY KEY (ticker, composite_figi, report_date, period)
 );
+COMMIT;

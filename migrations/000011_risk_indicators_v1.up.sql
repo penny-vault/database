@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS risk_indicators_v1 (
     event_date date primary key,
     tt_market_vane smallint,
@@ -17,3 +18,4 @@ CREATE TABLE IF NOT EXISTS risk_indicators_v1 (
     sg_delta real,
     sg_mcclellan real
 );
+COMMIT;

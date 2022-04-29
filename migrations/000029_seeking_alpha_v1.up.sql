@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS seeking_alpha_v1 (
     ticker text,
     composite_figi text,
@@ -15,4 +16,7 @@ CREATE TABLE IF NOT EXISTS seeking_alpha_v1 (
 
 CREATE INDEX seeking_alpha_v1_quant_idx ON seeking_alpha_v1 (event_date, quant_rating);
 
+GRANT SELECT ON seeking_alpha_v1 TO pvuser;
+
 ALTER TABLE tickers_v1 ADD COLUMN seeking_alpha_id int;
+COMMIT;

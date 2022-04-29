@@ -1,1 +1,3 @@
+BEGIN;
 DROP TABLE IF EXISTS reported_financials_v1 CASCADE;
+COMMIT;

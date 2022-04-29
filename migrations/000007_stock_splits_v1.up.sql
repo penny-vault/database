@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS stock_splits_v1 (
     ticker text,
     composite_figi text,
@@ -11,3 +12,4 @@ CREATE TABLE IF NOT EXISTS stock_splits_v1 (
     source datasource,
     PRIMARY KEY (ticker, composite_figi, ex_date)
 );
+COMMIT;

@@ -1,1 +1,3 @@
+BEGIN;
 DROP TABLE IF EXISTS portfolio_measurement_v1 CASCADE;
+COMMIT;

@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS dividend_v1 (
     ticker text,
     composite_figi text,
@@ -8,3 +9,4 @@ CREATE TABLE IF NOT EXISTS dividend_v1 (
     source datasource,
     PRIMARY KEY (ticker, composite_figi, exdiv_date)
 );
+COMMIT;

@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TABLE IF NOT EXISTS zacks_financials_v1 (
     ticker text,
     composite_figi text,
@@ -135,3 +136,4 @@ CREATE TABLE IF NOT EXISTS zacks_financials_v1 (
     cash_ratio real,
     PRIMARY KEY (ticker, composite_figi, event_date)
 );
+COMMIT;
