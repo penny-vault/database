@@ -16,8 +16,6 @@ CREATE VIEW health_v1 AS
         (SELECT count(*) FROM seeking_alpha_v1 WHERE event_date=(select (now() - INTERVAL '32 hours')::date)) AS seeking_alpha_v1_cnt,
         (SELECT count(*) FROM zacks_financials_v1 WHERE event_date=(select (now() - INTERVAL '32 hours')::date)) AS zacks_financials_v1_cnt;
 
-CREATE ROLE pvhealth WITH nologin;
-GRANT pvhealth TO pvapi;
 GRANT SELECT ON health_v1 TO pvhealth;
 
 COMMIT;
