@@ -4,9 +4,6 @@ BEGIN;
 -- postgrest anonymous user
 DROP ROLE pvanon;
 
--- execute on allowed functions
-REVOKE execute ON function uuid_generate_v4 FROM pvuser;
-
 -- tables with read only access
 REVOKE select ON dividend_v1 FROM pvuser;
 REVOKE select ON eod_v1 FROM pvuser;

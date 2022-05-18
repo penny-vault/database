@@ -7,9 +7,6 @@ CREATE ROLE pvanon WITH NOINHERIT;
 -- user group role
 CREATE ROLE pvuser WITH NOLOGIN;
 
--- execute on allowed functions
-GRANT execute ON function uuid_generate_v4 TO pvuser;
-
 -- tables with read only access
 GRANT select ON dividend_v1 TO pvuser;
 GRANT select ON eod_v1 TO pvuser;

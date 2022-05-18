@@ -2,7 +2,7 @@ BEGIN;
 CREATE TYPE tax_disposition AS ENUM ('LTC', 'STC', 'DEFERRED', 'ROTH');
 CREATE TYPE tx_type AS ENUM ('DEPOSIT', 'SELL', 'DIVIDEND', 'LTC', 'STC', 'BUY', 'WITHDRAW', 'MARKER', 'SPLIT');
 CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     cleared BOOL NOT NULL DEFAULT false,
     commission NUMERIC(9, 2) NOT NULL DEFAULT 0.0,
     composite_figi TEXT,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS portfolio_transaction_v1 (
     price_per_share NUMERIC(15, 5) CHECK (price_per_share >= 0.0),
     sequence_num INT NOT NULL DEFAULT 0,
     source VARCHAR(128),
-    source_id bytea NOT NULL DEFAULT uuid_send(uuid_generate_v4()),
+    source_id bytea NOT NULL DEFAULT uuid_send(gen_random_uuid()),
     tags varchar[],
     tax_type tax_disposition,
     ticker text,

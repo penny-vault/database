@@ -1,7 +1,5 @@
 -- Create portfolio tables that stores saved portfolios
 BEGIN;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -11,7 +9,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TABLE IF NOT EXISTS portfolio_v1 (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id VARCHAR(63) NOT NULL,
     name VARCHAR(32) NOT NULL,
     strategy_shortcode VARCHAR(8) NOT NULL,

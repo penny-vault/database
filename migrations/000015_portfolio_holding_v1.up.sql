@@ -1,6 +1,6 @@
 BEGIN;
 CREATE TABLE IF NOT EXISTS portfolio_holding_v1 (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     composite_figi TEXT NOT NULL,
     event_date DATE NOT NULL,
     percent_portfolio NUMERIC(12, 11) NOT NULL CHECK (percent_portfolio <= 1.0 AND percent_portfolio >= 0.0),
