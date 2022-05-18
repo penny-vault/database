@@ -16,7 +16,7 @@ CREATE TYPE assettype AS ENUM (
 
 ALTER TABLE tickers_v1 ADD COLUMN asset_type assettype NOT NULL DEFAULT 'Common Stock';
 
-DELETE FROM tickers_v1 WHERE type IN ('ADRR', 'ADRP')
+DELETE FROM tickers_v1 WHERE type IN ('ADRR', 'ADRP');
 UPDATE tickers_v1 SET asset_type = 'Common Stock' WHERE type IN ('Stock', 'CS');
 UPDATE tickers_v1 SET asset_type = 'American Depository Receipt Common' WHERE type IN ('ADR', 'ADRC');
 UPDATE tickers_v1 SET asset_type = 'Exchange Traded Fund' WHERE type = 'ETF';
@@ -42,10 +42,8 @@ ALTER TABLE tickers_v1 DROP COLUMN bloomberg;
 ALTER TABLE tickers_v1 DROP COLUMN sic;
 ALTER TABLE tickers_v1 DROP COLUMN lei;
 
-ALTER TABLE assets RENAME COLUMN url TO corporate_url;
-ALTER TABLE assets RENAME COLUMN logo TO logo_url;
-
-DROP TABLE tickers_v1_tmp;
+ALTER TABLE tickers_v1 RENAME COLUMN url TO corporate_url;
+ALTER TABLE tickers_v1 RENAME COLUMN logo TO logo_url;
 
 ALTER TABLE tickers_v1 RENAME TO assets;
 ALTER INDEX tickers_v1_pkey RENAME TO assets_pkey;
