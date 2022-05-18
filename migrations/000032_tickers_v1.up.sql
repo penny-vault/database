@@ -47,7 +47,7 @@ ALTER TABLE tickers_v1 RENAME COLUMN logo TO logo_url;
 
 ALTER TABLE tickers_v1 RENAME TO assets;
 ALTER INDEX tickers_v1_pkey RENAME TO assets_pkey;
-ALTER INDEX tickers_v1_active_idx RENAME TO assets_active_idx;
+ALTER INDEX tickers_v1_active RENAME TO assets_active_idx;
 
 ALTER TABLE eod_v1 RENAME TO eod;
 ALTER INDEX eod_v1_pkey RENAME TO eod_pkey;
