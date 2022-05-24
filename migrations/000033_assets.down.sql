@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE assets DROP COLUMN new;
+ALTER TABLE assets DROP COLUMN updated;
+
+COMMIT;
