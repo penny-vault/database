@@ -1,0 +1,7 @@
+BEGIN;
+
+ALTER TABLE eod DROP COLUMN adj_close CASCADE;
+
+DROP FUNCTION adj_close_default();
+
+COMMIT;
