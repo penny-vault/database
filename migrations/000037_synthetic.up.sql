@@ -1,7 +1,7 @@
 -- Changes necessary for synthetic symbols
 BEGIN;
 
-ALTER TABLE eod ADD COLUMN adj_close numeric(12, 4);
+ALTER TABLE eod ADD COLUMN adj_close numeric(18, 4);
 ALTER TYPE assettype ADD VALUE IF NOT EXISTS 'Synthetic History' AFTER 'FRED';
 
 CREATE OR REPLACE FUNCTION adj_close_default()
