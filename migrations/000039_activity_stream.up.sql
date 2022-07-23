@@ -1,6 +1,7 @@
 BEGIN;
 
-ALTER TABLE portfolios ADD COLUMN status TEXT;
+ALTER TABLE portfolios ADD COLUMN status TEXT DEFAULT 'pending';
+UPDATE portfolios SET status='unknown';
 
 CREATE TABLE activity_stream (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
