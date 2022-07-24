@@ -3,7 +3,7 @@ BEGIN;
 ALTER TABLE portfolios ADD COLUMN status TEXT DEFAULT 'pending';
 UPDATE portfolios SET status='unknown';
 
-CREATE TABLE activity_stream (
+CREATE TABLE activity (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     user_id CHARACTER VARYING(63) DEFAULT CURRENT_USER NOT NULL,
     portfolio_id uuid NOT NULL REFERENCES portfolios(id) ON DELETE CASCADE,
@@ -12,9 +12,9 @@ CREATE TABLE activity_stream (
     tags TEXT[]
 );
 
-ALTER TABLE activity_stream ENABLE ROW LEVEL SECURITY;
-CREATE POLICY user_id_policy ON activity_stream USING (((user_id)::text = CURRENT_USER)) WITH CHECK (((user_id)::text = CURRENT_USER));
-GRANT select, insert, update, delete ON activity_stream TO pvuser;
+ALTER TABLE activity ENABLE ROW LEVEL SECURITY;
+CREATE POLICY user_id_policy ON activity USING (((user_id)::text = CURRENT_USER)) WITH CHECK (((user_id)::text = CURRENT_USER));
+GRANT select, insert, update, delete ON activity TO pvuser;
 
 CREATE TABLE announcements (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
