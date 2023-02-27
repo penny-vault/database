@@ -9,6 +9,7 @@ ALTER TABLE portfolios ADD COLUMN tax_lot_bytes BYTEA;
 ALTER TABLE portfolios ADD COLUMN tax_lot_method TEXT;
 ALTER TABLE portfolios ADD COLUMN portfolio_type TEXT;
 ALTER TABLE portfolios ADD COLUMN linked_portfolios TEXT[];
+ALTER TABLE portfolios ADD COLUMN fractional_shares_precision SMALLINT DEFAULT 3;
 
 ALTER TABLE portfolio_transactions ADD COLUMN gain_loss NUMERIC(12, 5) DEFAULT 0.0;
 ALTER TABLE portfolio_transactions ADD COLUMN related TEXT[];
@@ -41,5 +42,7 @@ CREATE TABLE profile (
 ALTER TABLE profile ENABLE ROW LEVEL SECURITY;
 CREATE POLICY user_id_policy ON profile USING (((user_id)::text = CURRENT_USER)) WITH CHECK (((user_id)::text = CURRENT_USER));
 GRANT select, insert, update, delete ON profile TO pvuser;
+
+ALTER TYPE datasource ADD VALUE IF NOT EXISTS 'zacks.com';
 
 COMMIT;

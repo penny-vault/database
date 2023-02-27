@@ -9,6 +9,7 @@ ALTER TABLE portfolios DROP COLUMN tax_lot_bytes;
 ALTER TABLE portfolios DROP COLUMN tax_lot_method;
 ALTER TABLE portfolios DROP COLUMN portfolio_type;
 ALTER TABLE portfolios DROP COLUMN linked_portfolios;
+ALTER TABLE portfolios DROP COLUMN fractional_shares_precision;
 
 ALTER TABLE portfolio_transactions DROP COLUMN gain_loss;
 ALTER TABLE portfolio_transactions DROP COLUMN related;
